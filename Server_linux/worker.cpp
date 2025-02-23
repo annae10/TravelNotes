@@ -32,7 +32,7 @@ SSL_CTX *create_context() {
 }
 
 static int password_callback(char *buf, int size, int rwflag, void *user_data){
-    const char* password = "1234";
+    const char* password = "";
     if(size < static_cast<int>(strlen(password)+1)){
         return 0;
     }
@@ -44,10 +44,10 @@ void configure_context(SSL_CTX *ctx) {
     SSL_CTX_set_options(ctx, SSL_OP_NO_SSLv2 | SSL_OP_NO_SSLv3 | SSL_OP_NO_TLSv1 | SSL_OP_NO_TLSv1_1 | SSL_OP_NO_COMPRESSION | SSL_OP_CIPHER_SERVER_PREFERENCE);
     SSL_CTX_set_default_passwd_cb(ctx, password_callback);
 
-    if (SSL_CTX_use_certificate_file(ctx, "/home/debian12_08/server.crt", SSL_FILETYPE_PEM) <= 0) {
+    if (SSL_CTX_use_certificate_file(ctx, "server.crt", SSL_FILETYPE_PEM) <= 0) {
         ERR_print_errors_fp(stderr);
     }
-    if (SSL_CTX_use_PrivateKey_file(ctx, "/home/debian12_08/server.pem", SSL_FILETYPE_PEM) <= 0) {
+    if (SSL_CTX_use_PrivateKey_file(ctx, "server.pem", SSL_FILETYPE_PEM) <= 0) {
         ERR_print_errors_fp(stderr);
     }
 }
@@ -72,11 +72,9 @@ void Worker::start_server()
     bind(server, (struct sockaddr*)&addr, sizeof(addr));
     listen(server, 1);
 
-    //const char* data_list[] = {"Note1", "Note2", "Note3"};
     stringList.push_back("Note1");
     stringList.push_back("Note2");
     stringList.push_back("Note3");
-    //int num_items = sizeof(data_list)/sizeof(data_list[0]);
 
     int num_items = stringList.size();
 
@@ -84,11 +82,9 @@ void Worker::start_server()
         SSL *ssl;
         qDebug()<<"ssl\n";
         int client = accept(server, NULL, NULL);
-        //int client = accept(server,(struct sockaddr *)&client_addr, &client_len);
         if(client<0){
             qDebug()<<"accept failed\n";
         }
-        //int client = accept(server, NULL, NULL);
         qDebug("accept\n");
         ssl = SSL_new(ctx);
         qDebug("ssl new\n");
@@ -118,7 +114,6 @@ void Worker::start_server()
             }else{
                 printf("Successfully wrote %d bytes\n", total_written);
             }
-            //SSL_write(ssl, data_list, num_items);
 
             char buf[1024];
             SSL_read(ssl, buf, sizeof(buf));
@@ -146,7 +141,7 @@ void Worker::start_client()
     server = socket(AF_INET, SOCK_STREAM, 0);
     addr.sin_family = AF_INET;
     addr.sin_port = htons(PORT);
-    inet_pton(AF_INET, "192.168.56.1", &addr.sin_addr);
+    inet_pton(AF_INET, "ip", &addr.sin_addr);
 
     ::connect(server, (struct sockaddr*)&addr, sizeof(addr));
 
