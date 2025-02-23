@@ -28,7 +28,7 @@ inline SSL_CTX* create_context() {
 }
 
 static int password_callback(char *buf, int size, int rwflag, void *user_data){
-    const char* password = "1234";
+    const char* password = "";
     if(size < static_cast<int>(strlen(password)+1)){
         return 0;
     }
@@ -44,10 +44,10 @@ inline void configure_context(SSL_CTX *ctx) {
         ERR_print_errors_fp(stderr);
         abort();
     }
-    SSL_CTX_load_verify_locations(ctx,"C:/Users/Professional/Documents/test_ssl/domain.crt",NULL);
+    SSL_CTX_load_verify_locations(ctx,"domain.crt",NULL);
     SSL_CTX_set_cipher_list(ctx, "HIGH:!aNULL:!MD5");
 
-    if (SSL_CTX_use_PrivateKey_file(ctx, "C:/Users/Professional/Documents/test_ssl/domain.key", SSL_FILETYPE_PEM) <= 0) {
+    if (SSL_CTX_use_PrivateKey_file(ctx, "domain.key", SSL_FILETYPE_PEM) <= 0) {
         ERR_print_errors_fp(stderr);
         abort();
     }
@@ -129,7 +129,7 @@ void Worker::start_client()
 
     SSL_CTX_set_options(ctx, SSL_OP_NO_SSLv2 | SSL_OP_NO_SSLv3 | SSL_OP_NO_TLSv1 | SSL_OP_NO_TLSv1_1 | SSL_OP_NO_COMPRESSION | SSL_OP_NO_TICKET);
 
-    if(SSL_CTX_load_verify_locations(ctx, "C:/Users/Professional/Documents/test_ssl/server.crt", NULL)!=1)
+    if(SSL_CTX_load_verify_locations(ctx, "server.crt", NULL)!=1)
     {
         ERR_print_errors_fp(stderr);
         SSL_CTX_free(ctx);
@@ -154,7 +154,7 @@ void Worker::start_client()
     sockaddr_in server;
     server.sin_family = AF_INET;
     server.sin_port = htons(4443);
-    server.sin_addr.s_addr = inet_addr("192.168.56.101");
+    server.sin_addr.s_addr = inet_addr("ip");
 
     qDebug()<<"server\n";
 
