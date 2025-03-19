@@ -28,7 +28,7 @@ inline SSL_CTX* create_context() {
 }
 
 static int password_callback(char *buf, int size, int rwflag, void *user_data){
-    const char* password = "1234";
+    const char* password = "";
     if(size < static_cast<int>(strlen(password)+1)){
         return 0;
     }
@@ -147,6 +147,11 @@ void Worker::start_client()
     server.sin_family = AF_INET;
     server.sin_port = htons(4443);
     server.sin_addr.s_addr = inet_addr("ip");
+<<<<<<< HEAD
+=======
+
+    qDebug()<<"server\n";
+>>>>>>> aa50fe924c2ecb1b950fbc5de8f453c9436187f2
 
     if(::connect(sock, (struct sockaddr*)&server, sizeof(server))!=0){
         std::cerr<<"Error connecting to server: "<<WSAGetLastError()<<std::endl;
