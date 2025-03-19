@@ -11,9 +11,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(worker, &Worker::textChanged, this, &MainWindow::updateText);
     connect(worker, &Worker::clearText, this, &MainWindow::clearText);
 
-
-    connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::startWorker);
     connect(ui->pushButton_2, &QPushButton::clicked, this, &MainWindow::startWorker2);
+
 }
 
 MainWindow::~MainWindow()
@@ -24,6 +23,7 @@ MainWindow::~MainWindow()
 void MainWindow::updateText(const QString &text){
     ui->listWidget->addItem(text);
 }
+
 
 void MainWindow::clearText()
 {
@@ -68,3 +68,11 @@ void MainWindow::errorString(QString err)
 {
     qDebug() << "Error:" << err;
 }
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    ui->listWidget->clear();
+    startWorker();
+}
+

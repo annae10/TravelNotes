@@ -31,13 +31,13 @@
     <property name="geometry">
      <rect>
       <x>410</x>
-      <y>30</y>
+      <y>40</y>
       <width>131</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>Notes</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">

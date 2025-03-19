@@ -18,6 +18,8 @@
 #include <openssl/err.h>
 #include <arpa/inet.h>
 
+#include <QFile>
+#include <thread>
 #include <iostream>
 #define PORT 4443
 
@@ -28,14 +30,13 @@ public:
     explicit Worker(QObject *parent = nullptr);
     ~Worker(){}
 public slots:
-    void start_server();
     void start_client();
     void process();
-    void process2();
-
 signals:
     void finished();
     void error(QString err);
+private:
+    bool stopServerFlag=false;
 };
 
 #endif // WORKER_H

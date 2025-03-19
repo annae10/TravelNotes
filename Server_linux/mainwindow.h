@@ -18,13 +18,10 @@ public:
     ~MainWindow();
 
 public slots:
-    void startWorker();
-    void startWorker2();
     void errorString(QString err);
 
 private:
     Ui::MainWindow *ui;
-    Worker *worker;
 };
 
 #endif // MAINWINDOW_H

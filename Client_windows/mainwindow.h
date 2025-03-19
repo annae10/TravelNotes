@@ -20,6 +20,9 @@ public slots:
     void startWorker();
     void startWorker2();
     void errorString(QString err);
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     Worker *worker;
