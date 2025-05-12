@@ -14,8 +14,6 @@ void cleanup_openssl() {
     EVP_cleanup();
 }
 
-<<<<<<< HEAD
-=======
 SSL_CTX *create_context() {
     SSL_CTX *ctx;
 
@@ -125,7 +123,6 @@ void Worker::start_server()
     cleanup_openssl();
 }
 
->>>>>>> aa50fe924c2ecb1b950fbc5de8f453c9436187f2
 void Worker::start_client()
 {
     SSL_CTX *ctx;
